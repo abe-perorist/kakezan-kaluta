@@ -118,7 +118,7 @@ function startGame(dan = null, mode = 'dan') {
     GameState.score = 0;
     GameState.correctCount = 0;
     GameState.answeredQuestions = 0;
-    GameState.timeLeft = mode === 'time-attack' ? 999 : 30;
+    GameState.timeLeft = mode === 'time-attack' ? 999 : 999; // タイマー制限をなくす
     GameState.startTime = Date.now();
     
     // 問題を事前に生成
@@ -131,9 +131,10 @@ function startGame(dan = null, mode = 'dan') {
     updateGameUI();
     loadQuestion();
     
-    if (mode !== 'time-attack') {
-        startTimer();
-    }
+    // タイマー機能を無効化（30秒制限をなくす）
+    // if (mode !== 'time-attack') {
+    //     startTimer();
+    // }
 }
 
 // タイマー開始
@@ -154,10 +155,8 @@ function startTimer() {
 
 // タイマー更新
 function updateTimer() {
-    const minutes = Math.floor(GameState.timeLeft / 60);
-    const seconds = GameState.timeLeft % 60;
-    document.getElementById('timer').textContent = 
-        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    // タイマー制限をなくしたので「制限なし」と表示
+    document.getElementById('timer').textContent = '制限なし';
 }
 
 // 問題を読み込む
@@ -213,13 +212,26 @@ function selectAnswer(selectedAnswer) {
     
     GameState.answeredQuestions++;
     
-    setTimeout(() => {
-        if (GameState.answeredQuestions < GameState.totalQuestions) {
-            loadQuestion();
-        } else {
-            endGame();
-        }
-    }, 2000);
+    // 正解アニメーションが終わったらすぐに次の問題へ
+    if (selectedAnswer === GameState.correctAnswer) {
+        // 正解時はアニメーション（1.5秒）が終わったら次の問題へ
+        setTimeout(() => {
+            if (GameState.answeredQuestions < GameState.totalQuestions) {
+                loadQuestion();
+            } else {
+                endGame();
+            }
+        }, 1500);
+    } else {
+        // 不正解時は少し待ってから次の問題へ
+        setTimeout(() => {
+            if (GameState.answeredQuestions < GameState.totalQuestions) {
+                loadQuestion();
+            } else {
+                endGame();
+            }
+        }, 1500);
+    }
 }
 
 // 正解時の処理
@@ -406,6 +418,28 @@ function showCollection() {
     showScreen('collection-screen');
 }
 
+// データをリセット
+function resetAllData() {
+    if (confirm('すべての進捗データ、コレクション、記録をリセットしますか？\nこの操作は取り消せません。')) {
+        // ローカルストレージをクリア
+        localStorage.removeItem('collections');
+        localStorage.removeItem('progress');
+        localStorage.removeItem('bestTimes');
+        localStorage.removeItem('titles');
+        
+        // メモリ上のデータもリセット
+        GameData.collections = {};
+        GameData.progress = {};
+        GameData.bestTimes = {};
+        GameData.titles = [];
+        
+        alert('すべてのデータをリセットしました。');
+        
+        // メニュー画面に戻る
+        showScreen('main-menu');
+    }
+}
+
 // 達成度画面を表示
 function showProgress() {
     const list = document.getElementById('progress-list');
@@ -468,6 +502,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 達成度
     document.getElementById('progress-btn').addEventListener('click', showProgress);
+    
+    // リセットボタン
+    document.getElementById('reset-btn').addEventListener('click', resetAllData);
     
     // 戻るボタン
     document.getElementById('back-to-menu').addEventListener('click', () => {

@@ -148,6 +148,14 @@ body {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
+.reset-btn {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%) !important;
+}
+
+.reset-btn:hover {
+    background: linear-gradient(135deg, #ff5252 0%, #e53935 100%) !important;
+}
+
 /* ゲーム画面 */
 .game-header {
     display: flex;
