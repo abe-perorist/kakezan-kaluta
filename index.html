@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>楽しい九九マスター - 九九星人を捕まえよう！</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- メインメニュー画面 -->
+    <div id="main-menu" class="screen active">
+        <div class="container">
+            <h1 class="title">
+                <span class="star">🌟</span>
+                楽しい九九マスター
+                <span class="star">🌟</span>
+            </h1>
+            <p class="subtitle">九九星人を捕まえて、コレクションを完成させよう！</p>
+            
+            <div class="menu-section">
+                <h2>段を選んで練習</h2>
+                <div class="dan-buttons">
+                    <button class="dan-btn" data-dan="1">1の段</button>
+                    <button class="dan-btn" data-dan="2">2の段</button>
+                    <button class="dan-btn" data-dan="3">3の段</button>
+                    <button class="dan-btn" data-dan="4">4の段</button>
+                    <button class="dan-btn" data-dan="5">5の段</button>
+                    <button class="dan-btn" data-dan="6">6の段</button>
+                    <button class="dan-btn" data-dan="7">7の段</button>
+                    <button class="dan-btn" data-dan="8">8の段</button>
+                    <button class="dan-btn" data-dan="9">9の段</button>
+                </div>
+            </div>
+            
+            <div class="menu-section">
+                <h2>モードを選ぶ</h2>
+                <button class="mode-btn" id="random-mode">ランダム出題モード</button>
+                <button class="mode-btn" id="time-attack-mode">タイムアタックモード</button>
+            </div>
+            
+            <div class="menu-section">
+                <button class="menu-btn" id="collection-btn">📚 コレクションを見る</button>
+                <button class="menu-btn" id="progress-btn">📊 達成度を見る</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ゲーム画面 -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <div class="timer-container">
+                <span class="timer-label">⏱️ 残り時間</span>
+                <span id="timer" class="timer">00:30</span>
+            </div>
+            <div class="score-container">
+                <span class="score-label">スコア</span>
+                <span id="score" class="score">0</span>
+            </div>
+        </div>
+        
+        <div class="game-content">
+            <div class="question-container">
+                <div class="current-dan" id="current-dan">7の段</div>
+                <div class="question" id="question">7 × 8 = ?</div>
+            </div>
+            
+            <div class="answer-options" id="answer-options">
+                <!-- 選択肢はJavaScriptで動的に生成 -->
+            </div>
+            
+            <div class="progress-info">
+                <div class="progress-text">
+                    正解数: <span id="correct-count">0</span>/<span id="total-questions">10</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="back-btn" id="back-to-menu">← メニューに戻る</button>
+    </div>
+
+    <!-- 正解アニメーション -->
+    <div id="correct-animation" class="correct-animation">
+        <div class="correct-text">正解！</div>
+        <div class="star-particles" id="star-particles"></div>
+        <div class="character-celebration" id="character-celebration">🎉</div>
+    </div>
+
+    <!-- 結果画面 -->
+    <div id="result-screen" class="screen">
+        <div class="container">
+            <h1 class="result-title">🎉 おつかれさま！ 🎉</h1>
+            
+            <div class="result-stats">
+                <div class="stat-item">
+                    <div class="stat-label">正解数</div>
+                    <div class="stat-value" id="result-correct">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">正答率</div>
+                    <div class="stat-value" id="result-accuracy">0%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">獲得スコア</div>
+                    <div class="stat-value" id="result-score">0</div>
+                </div>
+            </div>
+            
+            <div class="reward-container" id="reward-container">
+                <!-- ご褒美はJavaScriptで動的に表示 -->
+            </div>
+            
+            <div class="result-buttons">
+                <button class="result-btn" id="play-again">もう一度</button>
+                <button class="result-btn" id="back-to-menu-result">メニューに戻る</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- コレクション画面 -->
+    <div id="collection-screen" class="screen">
+        <div class="container">
+            <h1 class="title">📚 九九星人コレクション</h1>
+            <div class="collection-grid" id="collection-grid">
+                <!-- コレクションはJavaScriptで動的に表示 -->
+            </div>
+            <button class="back-btn" id="back-from-collection">← メニューに戻る</button>
+        </div>
+    </div>
+
+    <!-- 達成度画面 -->
+    <div id="progress-screen" class="screen">
+        <div class="container">
+            <h1 class="title">📊 達成度</h1>
+            <div class="progress-list" id="progress-list">
+                <!-- 達成度はJavaScriptで動的に表示 -->
+            </div>
+            <button class="back-btn" id="back-from-progress">← メニューに戻る</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
