@@ -191,6 +191,13 @@ function loadQuestion() {
         return;
     }
     
+    // 既存のボタンの状態をリセット（念のため）
+    const existingButtons = document.querySelectorAll('.answer-btn');
+    existingButtons.forEach(btn => {
+        btn.classList.remove('correct', 'incorrect');
+        btn.disabled = false;
+    });
+    
     GameState.currentQuestion = GameState.questions[GameState.answeredQuestions];
     GameState.correctAnswer = GameState.currentQuestion.answer;
     
@@ -204,7 +211,7 @@ function loadQuestion() {
         document.getElementById('current-dan').textContent = `${GameState.currentQuestion.dan}の段`;
     }
     
-    // 選択肢表示
+    // 選択肢表示（既存のボタンを完全に削除してから新規作成）
     const optionsContainer = document.getElementById('answer-options');
     optionsContainer.innerHTML = '';
     
@@ -212,6 +219,7 @@ function loadQuestion() {
         const button = document.createElement('button');
         button.className = 'answer-btn';
         button.textContent = option;
+        button.disabled = false; // 明示的にdisabledをfalseに
         button.onclick = () => selectAnswer(option);
         optionsContainer.appendChild(button);
     });
