@@ -214,14 +214,14 @@ function selectAnswer(selectedAnswer) {
     
     // 正解アニメーションが終わったらすぐに次の問題へ
     if (selectedAnswer === GameState.correctAnswer) {
-        // 正解時はアニメーション（1.5秒）が終わったら次の問題へ
+        // 正解時はアニメーション（0.5秒）が終わったら次の問題へ
         setTimeout(() => {
             if (GameState.answeredQuestions < GameState.totalQuestions) {
                 loadQuestion();
             } else {
                 endGame();
             }
-        }, 1500);
+        }, 500);
     } else {
         // 不正解時は少し待ってから次の問題へ
         setTimeout(() => {
@@ -264,7 +264,7 @@ function showCorrectAnimation() {
     
     setTimeout(() => {
         animation.classList.remove('active');
-    }, 1500);
+    }, 500);
 }
 
 // ご褒美を付与
