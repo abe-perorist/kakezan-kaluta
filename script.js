@@ -123,8 +123,33 @@ function startGame(dan = null, mode = 'dan') {
     
     // 問題を事前に生成
     GameState.questions = [];
-    for (let i = 0; i < GameState.totalQuestions; i++) {
-        GameState.questions.push(generateQuestion(dan));
+    
+    if (dan && mode === 'dan') {
+        // 段を選んで練習モードの場合、9問を被りなく出題（1×から9×まで）
+        GameState.totalQuestions = 9;
+        const multipliers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        shuffleArray(multipliers); // 順序をランダムに
+        
+        multipliers.forEach(multiplier2 => {
+            const question = {
+                question: `${dan} × ${multiplier2} = ?`,
+                answer: dan * multiplier2,
+                options: [],
+                dan: dan
+            };
+            
+            // 間違った選択肢を生成
+            const wrongAnswers = generateWrongAnswers(question.answer);
+            question.options = shuffleArray([question.answer, ...wrongAnswers]);
+            
+            GameState.questions.push(question);
+        });
+    } else {
+        // ランダム出題モードやタイムアタックモードは従来通り
+        GameState.totalQuestions = 10;
+        for (let i = 0; i < GameState.totalQuestions; i++) {
+            GameState.questions.push(generateQuestion(dan));
+        }
     }
     
     showScreen('game-screen');
