@@ -247,29 +247,6 @@ function handleIncorrectAnswer() {
 // 正解アニメーション表示
 function showCorrectAnimation() {
     const animation = document.getElementById('correct-animation');
-    const starParticles = document.getElementById('star-particles');
-    const character = document.getElementById('character-celebration');
-    
-    // キャラクター設定
-    const dan = GameState.currentQuestion.dan;
-    const char = Characters[dan];
-    character.textContent = char.emoji;
-    character.style.color = char.color;
-    
-    // 星のパーティクル生成
-    starParticles.innerHTML = '';
-    for (let i = 0; i < 30; i++) {
-        const star = document.createElement('div');
-        star.className = 'star-particle';
-        star.textContent = '⭐';
-        const angle = (Math.PI * 2 * i) / 30;
-        const distance = 200 + Math.random() * 300;
-        star.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
-        star.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
-        star.style.left = '50%';
-        star.style.top = '50%';
-        starParticles.appendChild(star);
-    }
     
     animation.classList.add('active');
     
